@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import AuthContext from "@/context/AuthContext";
 import "./globals.css";
@@ -20,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="antialiased">
-        <AuthContext>{children}</AuthContext>
+        <Suspense fallback={null}>
+          <AuthContext>{children}</AuthContext>
+        </Suspense>
       </body>
     </html>
   );

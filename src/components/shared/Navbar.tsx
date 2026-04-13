@@ -1,15 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Button from '@/components/ui/Button';
 
 export default function Navbar() {
   const { data: session } = useSession();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const redirectTo = searchParams.get('redirectTo') || (pathname.startsWith('/sign-') ? null : pathname);
+  const redirectTo = pathname.startsWith('/sign-') ? null : pathname;
   const signInHref = redirectTo ? `/sign-in?redirectTo=${encodeURIComponent(redirectTo)}` : '/sign-in';
   const signUpHref = redirectTo ? `/sign-up?redirectTo=${encodeURIComponent(redirectTo)}` : '/sign-up';
 

@@ -34,7 +34,7 @@ Users can report lost/found items, manage their profile, browse other users, cha
 
 ## Live Deployment
 
-`https://lost-found-ten-theta.vercel.app/`
+[Open the live app](https://lost-found-ten-theta.vercel.app/)
 
 ## Tech Stack
 

@@ -1,19 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import Button from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
 
-export default function GoogleSignIn() {
-  const searchParams = useSearchParams();
+interface GoogleSignInProps {
+  redirectTo?: string;
+}
+
+export default function GoogleSignIn({ redirectTo = '/dashboard' }: GoogleSignInProps) {
   const { showToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {
-    const redirectTo = searchParams.get('redirectTo') || '/dashboard';
-
     setIsLoading(true);
 
     try {

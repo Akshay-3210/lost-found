@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
@@ -26,17 +26,22 @@ function getAuthErrorMessage(error: string | null) {
   }
 }
 
-export default function SignInForm() {
+interface SignInFormProps {
+  oauthError?: string;
+  redirectTo?: string;
+}
+
+export default function SignInForm({
+  oauthError,
+  redirectTo = '/dashboard',
+}: SignInFormProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { showToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  const oauthError = searchParams.get('error');
-  const redirectTo = searchParams.get('redirectTo') || '/dashboard';
   const [errors, setErrors] = useState<Record<string, string>>(
     oauthError ? { form: getAuthErrorMessage(oauthError) } : {}
   );

@@ -1,16 +1,19 @@
 'use client';
 
 import { startTransition, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import { useToast } from '@/components/ui/Toast';
 import { signUpSchema } from '@/schemas/auth';
 
-export default function SignUpForm() {
+interface SignUpFormProps {
+  redirectTo?: string;
+}
+
+export default function SignUpForm({ redirectTo = '/dashboard' }: SignUpFormProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { showToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -19,7 +22,6 @@ export default function SignUpForm() {
     password: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const redirectTo = searchParams.get('redirectTo') || '/dashboard';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

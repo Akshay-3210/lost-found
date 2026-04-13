@@ -9,7 +9,14 @@ export const metadata: Metadata = {
   description: 'Sign in to your Lost & Found account',
 };
 
-export default function SignInPage() {
+export default async function SignInPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string; redirectTo?: string }>;
+}) {
+  const { error, redirectTo } = await searchParams;
+  const destination = redirectTo || '/dashboard';
+
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
@@ -27,7 +34,7 @@ export default function SignInPage() {
 
         <ToastProvider>
           <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 shadow-sm">
-            <SignInForm />
+            <SignInForm oauthError={error} redirectTo={destination} />
 
             <div className="mt-6">
               <div className="relative">
@@ -40,7 +47,7 @@ export default function SignInPage() {
               </div>
 
               <div className="mt-6">
-                <GoogleSignIn />
+                <GoogleSignIn redirectTo={destination} />
               </div>
             </div>
           </div>

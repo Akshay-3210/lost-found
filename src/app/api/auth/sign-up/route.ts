@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     await sendVerificationEmail({
       email,
       name,
-      verificationUrl: buildVerificationUrl(token, email, redirectTo),
+      verificationUrl: buildVerificationUrl(token, email, redirectTo, request.nextUrl.origin),
     });
 
     return NextResponse.json(

@@ -78,6 +78,7 @@ DB_NAME=lost-found
 
 NEXTAUTH_SECRET=your_random_secret
 NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
@@ -90,6 +91,8 @@ RESEND_API_KEY=your_resend_api_key
 ```
 
 You can also use `.env.sample` as a starting point.
+
+For production, set `NEXTAUTH_URL` and `NEXT_PUBLIC_APP_URL` to your real deployed domain, not `localhost`.
 
 ## Local Setup
 

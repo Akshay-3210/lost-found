@@ -18,20 +18,32 @@ export function hashEmailVerificationToken(token: string) {
   return crypto.createHash('sha256').update(token).digest('hex');
 }
 
-export function getAppBaseUrl() {
+function normalizeBaseUrl(url: string) {
+  return url.trim().replace(/\/+$/, '');
+}
+
+export function getAppBaseUrl(preferredBaseUrl?: string) {
+  if (preferredBaseUrl) {
+    return normalizeBaseUrl(preferredBaseUrl);
+  }
+
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return normalizeBaseUrl(process.env.NEXT_PUBLIC_APP_URL);
+  }
+
   if (process.env.NEXTAUTH_URL) {
-    return process.env.NEXTAUTH_URL;
+    return normalizeBaseUrl(process.env.NEXTAUTH_URL);
   }
 
   if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+    return normalizeBaseUrl(`https://${process.env.VERCEL_URL}`);
   }
 
   return 'http://localhost:3000';
 }
 
-export function buildVerificationUrl(token: string, email: string, redirectTo?: string) {
-  const url = new URL('/verify-email', getAppBaseUrl());
+export function buildVerificationUrl(token: string, email: string, redirectTo?: string, baseUrl?: string) {
+  const url = new URL('/verify-email', getAppBaseUrl(baseUrl));
   url.searchParams.set('token', token);
   url.searchParams.set('email', email);
 

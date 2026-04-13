@@ -56,7 +56,7 @@ export default async function ItemDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      <div className="max-w-4xl mx-auto px-6 py-8">
+      <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-8">
         <Link
           href="/"
           className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
@@ -64,10 +64,10 @@ export default async function ItemDetailPage({ params }: PageProps) {
           &larr; Back to Home
         </Link>
 
-        <div className="mt-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 shadow-sm">
-          <div className="flex items-start justify-between gap-4 mb-6">
+        <div className="mt-6 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 sm:p-6">
+          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <div className="flex items-center gap-2 mb-2">
+              <div className="mb-2 flex flex-wrap items-center gap-2">
                 <span
                   className={cn(
                     'px-3 py-1 rounded-full text-sm font-medium',
@@ -81,18 +81,18 @@ export default async function ItemDetailPage({ params }: PageProps) {
                     'px-3 py-1 rounded-full text-sm font-medium',
                     statusColors[item.status]
                   )}
-                >
-                  {item.status}
-                </span>
+              >
+                {item.status}
+              </span>
               </div>
-              <h1 className="text-3xl font-bold text-zinc-900 dark:text-white">
+              <h1 className="text-2xl font-bold text-zinc-900 dark:text-white sm:text-3xl">
                 {item.title}
               </h1>
             </div>
           </div>
 
           {item.images && item.images.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
               {item.images.map((img: string, index: number) => (
                 <img
                   key={index}
@@ -163,8 +163,8 @@ export default async function ItemDetailPage({ params }: PageProps) {
           )}
 
           {isOwner && (
-            <div className="mt-8 pt-6 border-t border-zinc-200 dark:border-zinc-700 flex gap-4">
-              <Button asChild>
+            <div className="mt-8 flex gap-4 border-t border-zinc-200 pt-6 dark:border-zinc-700">
+              <Button asChild className="w-full sm:w-auto">
                 <Link href={`/items/${item._id.toString()}/edit`}>Edit Item</Link>
               </Button>
             </div>

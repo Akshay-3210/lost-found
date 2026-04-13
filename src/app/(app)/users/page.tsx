@@ -36,15 +36,15 @@ export default async function UsersPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      <div className="mx-auto max-w-6xl px-6 py-10">
-        <div className="mb-8 flex items-center justify-between gap-4">
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-zinc-900 dark:text-white">Other Users</h1>
+            <h1 className="text-2xl font-bold text-zinc-900 dark:text-white sm:text-3xl">Other Users</h1>
             <p className="mt-2 text-zinc-600 dark:text-zinc-400">
               Open public profiles and send messages when you are signed in.
             </p>
           </div>
-          <Button variant="outline" asChild>
+          <Button variant="outline" asChild className="w-full sm:w-auto">
             <Link href="/">Home</Link>
           </Button>
         </div>
@@ -56,7 +56,7 @@ export default async function UsersPage() {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {otherUsers.map((user) => (
               <Card key={user._id.toString()} className="overflow-hidden">
                 <CardContent className="space-y-4 p-6">

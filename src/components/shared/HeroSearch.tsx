@@ -19,16 +19,16 @@ export default function HeroSearch() {
   };
 
   return (
-    <section className="py-16 text-center">
-      <h1 className="text-4xl md:text-5xl font-bold text-zinc-900 dark:text-white mb-4">
+    <section className="py-10 text-center sm:py-16">
+      <h1 className="mb-4 text-3xl font-bold text-zinc-900 dark:text-white sm:text-4xl md:text-5xl">
         Lost Something?
       </h1>
-      <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-8 max-w-2xl mx-auto">
+      <p className="mx-auto mb-8 max-w-2xl text-base text-zinc-600 dark:text-zinc-400 sm:text-lg">
         Search through hundreds of lost and found items, or report an item you&apos;ve found
       </p>
 
       <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
           <div className="flex-1">
             <Input
               type="text"
@@ -41,13 +41,13 @@ export default function HeroSearch() {
           <select
             value={searchType}
             onChange={(e) => setSearchType(e.target.value as typeof searchType)}
-            className="h-12 px-4 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-zinc-500"
+            className="h-12 w-full rounded-lg border border-zinc-300 bg-white px-4 text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white sm:w-auto"
           >
             <option value="all">All Items</option>
             <option value="lost">Lost</option>
             <option value="found">Found</option>
           </select>
-          <Button type="submit" size="lg">
+          <Button type="submit" size="lg" className="w-full sm:w-auto">
             Search
           </Button>
         </div>

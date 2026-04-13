@@ -15,16 +15,16 @@ export default function Header() {
 
   return (
     <header className="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between gap-6">
-          <div className="flex items-center gap-6">
-            <Link href="/" className="text-2xl font-bold leading-none text-zinc-900 dark:text-white">
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="flex min-w-0 flex-col gap-4 lg:flex-row lg:items-start lg:gap-6">
+            <Link href="/" className="text-xl font-bold leading-none text-zinc-900 dark:text-white sm:text-2xl">
               Lost & Found
             </Link>
             {pathname === '/' && session?.user?.role === 'user' && <HomeProfileSection />}
           </div>
 
-          <nav className="flex items-center gap-7">
+          <nav className="flex flex-wrap items-center gap-3 sm:gap-4 lg:justify-end">
             <Link href="/" className="text-base text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">
               Home
             </Link>

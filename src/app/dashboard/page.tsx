@@ -32,21 +32,21 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-8">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
+        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-zinc-900 dark:text-white">
+            <h1 className="text-2xl font-bold text-zinc-900 dark:text-white sm:text-3xl">
               Dashboard
             </h1>
             <p className="mt-1 text-zinc-600 dark:text-zinc-400">
               Welcome back, {session.user.name || session.user.email}
             </p>
           </div>
-          <div className="flex items-center gap-4">
-            <Button variant="outline" asChild>
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <Button variant="outline" asChild className="w-full sm:w-auto">
               <Link href="/">Home</Link>
             </Button>
-            <Button asChild>
+            <Button asChild className="w-full sm:w-auto">
               <Link href="/items/new">Report Item</Link>
             </Button>
             <SignOutButton />

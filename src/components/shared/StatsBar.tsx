@@ -39,11 +39,11 @@ export default function StatsBar() {
   ];
 
   return (
-    <section className="mt-16 py-8 border-t border-zinc-200 dark:border-zinc-800">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <section className="mt-12 border-t border-zinc-200 py-8 dark:border-zinc-800 sm:mt-16">
+      <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
         {statItems.map((item) => (
           <div key={item.label} className="text-center">
-            <div className="text-3xl font-bold text-zinc-900 dark:text-white mb-1">
+            <div className="mb-1 text-2xl font-bold text-zinc-900 dark:text-white sm:text-3xl">
               {item.value}
             </div>
             <div className="text-sm text-zinc-600 dark:text-zinc-400">

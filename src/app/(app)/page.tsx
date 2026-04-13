@@ -15,14 +15,14 @@ export default function HomePage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-linear-to-b from-zinc-50 to-white dark:from-zinc-950 dark:to-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
-        <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
           <HeroSearch />
 
-          <div className="flex justify-center gap-4 mt-8">
-            <Button size="lg" asChild>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+            <Button size="lg" asChild className="w-full sm:w-auto">
               <Link href="/items/new">Report an Item</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild>
+            <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
               <Link href="/sign-up">Get Started</Link>
             </Button>
           </div>
@@ -31,8 +31,8 @@ export default function HomePage() {
 
       {/* Recent Items */}
       <section className="py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between mb-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">
               Recent Items
             </h2>
@@ -52,11 +52,11 @@ export default function HomePage() {
 
       {/* Features */}
       <section className="py-16 border-t border-zinc-200 dark:border-zinc-800">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <h2 className="text-2xl font-bold text-zinc-900 dark:text-white text-center mb-12">
             How It Works
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid gap-8 md:grid-cols-3">
             <div className="text-center">
               <div className="w-12 h-12 bg-zinc-900 dark:bg-white rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white dark:text-zinc-900 font-bold text-lg">1</span>

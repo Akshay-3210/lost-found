@@ -45,7 +45,7 @@ export default function HomeProfileSection() {
 
   if (status === 'loading') {
     return (
-      <div className="w-full max-w-sm rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+      <div className="w-full max-w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 lg:max-w-sm">
         <p className="text-sm text-zinc-600 dark:text-zinc-400">Loading your profile...</p>
       </div>
     );
@@ -58,12 +58,12 @@ export default function HomeProfileSection() {
   const initials = initialsFromName(session.user.name, session.user.email);
 
   return (
-    <div id="profile" className="w-full max-w-sm rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
+    <div id="profile" className="w-full max-w-full rounded-2xl border border-zinc-200 bg-zinc-50 px-4 py-3 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 lg:max-w-sm">
       <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400">
         Signed In
       </p>
       <div className="mt-3 flex items-start gap-3">
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           <div className="group relative">
             <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-zinc-200 bg-white text-sm font-semibold text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100">
               {session.user.image ? (
@@ -85,7 +85,7 @@ export default function HomeProfileSection() {
             </h2>
             <p className="truncate text-xs text-zinc-600 dark:text-zinc-400">{session.user.email}</p>
             <p className="mt-1 text-xs leading-5 text-zinc-600 dark:text-zinc-400">
-              Hover photo for bio.
+              Tap or hover photo for bio.
             </p>
           </div>
         </div>

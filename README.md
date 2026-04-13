@@ -32,6 +32,10 @@ Users can report lost/found items, manage their profile, browse other users, cha
   - Open admin user view
   - Remove user profiles from Atlas
 
+## Live Deployment
+
+`https://lost-found-ten-theta.vercel.app/`
+
 ## Tech Stack
 
 - Next.js 16

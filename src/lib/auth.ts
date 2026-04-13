@@ -52,6 +52,10 @@ export const authConfig: NextAuthConfig = {
           throw new Error('This account uses Google sign-in. Please use Google to log in.');
         }
 
+        if (!user.emailVerified) {
+          throw new Error('Please verify your email before signing in.');
+        }
+
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {

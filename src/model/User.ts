@@ -9,6 +9,8 @@ export interface IUser extends Document {
   location?: string;
   bio?: string;
   emailVerified?: Date;
+  emailVerificationToken?: string;
+  emailVerificationExpires?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -54,6 +56,15 @@ const userSchema = new Schema<IUser>(
     emailVerified: {
       type: Date,
     },
+    emailVerificationToken: {
+      type: String,
+      select: false,
+      default: null,
+    },
+    emailVerificationExpires: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -65,7 +76,9 @@ const hasCurrentProfileFields =
   existingUserModel?.schema.path('phone') &&
   existingUserModel?.schema.path('location') &&
   existingUserModel?.schema.path('bio') &&
-  existingUserModel?.schema.path('image');
+  existingUserModel?.schema.path('image') &&
+  existingUserModel?.schema.path('emailVerificationToken') &&
+  existingUserModel?.schema.path('emailVerificationExpires');
 
 // In local dev, Next.js hot reload can keep an older compiled model around.
 // Rebuild it when the cached schema is missing newer profile fields.

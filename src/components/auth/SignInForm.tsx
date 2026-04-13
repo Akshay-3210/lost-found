@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -29,22 +29,35 @@ function getAuthErrorMessage(error: string | null) {
 interface SignInFormProps {
   oauthError?: string;
   redirectTo?: string;
+  message?: string;
+  initialEmail?: string;
 }
 
 export default function SignInForm({
   oauthError,
   redirectTo = '/dashboard',
+  message,
+  initialEmail = '',
 }: SignInFormProps) {
   const router = useRouter();
   const { showToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [isResendingVerification, setIsResendingVerification] = useState(false);
   const [formData, setFormData] = useState({
-    email: '',
+    email: initialEmail,
     password: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>(
     oauthError ? { form: getAuthErrorMessage(oauthError) } : {}
   );
+
+  useEffect(() => {
+    if (message === 'verify-email' && initialEmail && !oauthError) {
+      setErrors({
+        form: 'Check your inbox and verify your email before signing in.',
+      });
+    }
+  }, [initialEmail, message, oauthError]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,6 +105,45 @@ export default function SignInForm({
     }
   };
 
+  const handleResendVerification = async () => {
+    const email = formData.email.trim().toLowerCase();
+
+    if (!email) {
+      setErrors({ email: 'Enter your email first to resend the verification link.' });
+      return;
+    }
+
+    setIsResendingVerification(true);
+
+    try {
+      const res = await fetch('/api/auth/resend-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, redirectTo }),
+      });
+      const data = (await res.json()) as { message?: string; error?: string };
+
+      if (!res.ok) {
+        const errorMessage = data.error || 'Failed to resend verification email.';
+        setErrors({ form: errorMessage });
+        showToast(errorMessage, 'error');
+        return;
+      }
+
+      const successMessage = data.message || 'Verification email sent.';
+      setErrors({ form: successMessage });
+      showToast(successMessage, 'success');
+    } catch {
+      showToast('Failed to resend verification email.', 'error');
+    } finally {
+      setIsResendingVerification(false);
+    }
+  };
+
+  const canResendVerification =
+    errors.form === 'Please verify your email before signing in.' ||
+    message === 'verify-email';
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <Input
@@ -115,12 +167,30 @@ export default function SignInForm({
       />
 
       {errors.form && (
-        <p className="text-sm text-red-600 dark:text-red-400">{errors.form}</p>
+        <p
+          className={`text-sm ${
+            canResendVerification ? 'text-zinc-600 dark:text-zinc-300' : 'text-red-600 dark:text-red-400'
+          }`}
+        >
+          {errors.form}
+        </p>
       )}
 
       <Button type="submit" isLoading={isLoading} className="w-full">
         Sign In
       </Button>
+
+      {canResendVerification && (
+        <Button
+          type="button"
+          variant="outline"
+          isLoading={isResendingVerification}
+          onClick={handleResendVerification}
+          className="w-full"
+        >
+          Resend Verification Email
+        </Button>
+      )}
 
       <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
         Don&apos;t have an account?{' '}

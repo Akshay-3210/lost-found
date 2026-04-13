@@ -51,10 +51,13 @@ export default function SignUpForm({ redirectTo = '/dashboard' }: SignUpFormProp
       const res = await fetch('/api/auth/sign-up', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(parsedData.data),
+        body: JSON.stringify({
+          ...parsedData.data,
+          redirectTo,
+        }),
       });
 
-      let data: { error?: string } | null = null;
+      let data: { error?: string; user?: { email: string } } | null = null;
       try {
         data = await res.json();
       } catch {
@@ -66,12 +69,19 @@ export default function SignUpForm({ redirectTo = '/dashboard' }: SignUpFormProp
         setErrors({ form: message });
         showToast(message, 'error');
       } else {
-        showToast('Account created successfully', 'success');
+        showToast('Verification email sent. Please check your inbox.', 'success');
         startTransition(() => {
-          const nextHref =
-            redirectTo === '/dashboard'
-              ? '/sign-in'
-              : `/sign-in?redirectTo=${encodeURIComponent(redirectTo)}`;
+          const email = data?.user?.email || parsedData.data.email;
+          const params = new URLSearchParams({
+            email,
+            message: 'verify-email',
+          });
+
+          if (redirectTo !== '/dashboard') {
+            params.set('redirectTo', redirectTo);
+          }
+
+          const nextHref = `/sign-in?${params.toString()}`;
           router.push(nextHref);
         });
       }

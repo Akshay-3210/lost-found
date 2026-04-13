@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 export default async function SignInPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; redirectTo?: string }>;
+  searchParams: Promise<{ error?: string; redirectTo?: string; message?: string; email?: string }>;
 }) {
-  const { error, redirectTo } = await searchParams;
+  const { error, redirectTo, message, email } = await searchParams;
   const destination = redirectTo || '/dashboard';
 
   return (
@@ -34,7 +34,7 @@ export default async function SignInPage({
 
         <ToastProvider>
           <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 shadow-sm">
-            <SignInForm oauthError={error} redirectTo={destination} />
+            <SignInForm oauthError={error} redirectTo={destination} message={message} initialEmail={email} />
 
             <div className="mt-6">
               <div className="relative">

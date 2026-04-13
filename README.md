@@ -1,36 +1,162 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lost & Found
 
-## Getting Started
+A community-driven Lost & Found web app built with Next.js, React, MongoDB, NextAuth, and Tailwind CSS.
 
-First, run the development server:
+Users can report lost/found items, manage their profile, browse other users, chat with each other, and track messages. Admins can moderate item records and manage user profiles from a dedicated admin panel.
+
+## Features
+
+- User authentication with:
+  - Email/password sign up and sign in
+  - Google sign in
+- User profile management:
+  - Profile image upload
+  - Name, phone, location, and bio
+- Lost & found item management:
+  - Create lost and found item reports
+  - Browse recent items
+  - Search listings
+  - Manage your own reported items
+- User directory:
+  - Browse other public user profiles
+  - Open public user profile pages
+- Messaging and chat:
+  - Start a chat with another signed-in user
+  - Track conversation history
+  - Delete your own sent messages
+- Admin tools:
+  - View and moderate all items
+  - Change item type
+  - Mark items active/resolved
+  - Record `claimed by` name when resolving an item
+  - Open admin user view
+  - Remove user profiles from Atlas
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- MongoDB + Mongoose
+- NextAuth v5 beta
+- Tailwind CSS 4
+- Zod
+- Cloudinary
+
+## Project Structure
+
+```text
+src/
+  app/
+    (app)/
+    admin/
+    api/
+  components/
+    admin/
+    auth/
+    items/
+    profile/
+    shared/
+    ui/
+    users/
+  helpers/
+  lib/
+  model/
+  schemas/
+  types/
+```
+
+## Environment Variables
+
+Create `.env.local` and add the required values.
+
+Example:
+
+```env
+MONGODB_URI=your_mongodb_connection_string
+DB_NAME=lost-found
+
+NEXTAUTH_SECRET=your_random_secret
+NEXTAUTH_URL=http://localhost:3000
+
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+RESEND_API_KEY=your_resend_api_key
+```
+
+You can also use `.env.sample` as a starting point.
+
+## Local Setup
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Add your environment variables in `.env.local`.
+
+3. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Admin Access
 
-## Learn More
+The app currently uses hardcoded admin credentials in [src/lib/auth.ts](src/lib/auth.ts):
 
-To learn more about Next.js, take a look at the following resources:
+```ts
+const ADMIN_EMAIL = 'root@gmail.com';
+const ADMIN_PASSWORD = '12345678';
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Before deploying publicly, change these values to something secure or move them to environment variables.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Available Scripts
 
-## Deploy on Vercel
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Recommended Pre-Deploy Checklist
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Replace the hardcoded admin credentials with secure values
+- Confirm MongoDB Atlas network access is configured for your hosting platform
+- Confirm Google OAuth redirect URLs include your production domain
+- Confirm Cloudinary credentials are valid
+- Run lint locally:
+
+```bash
+npm run lint
+```
+
+- Run a production build locally:
+
+```bash
+npm run build
+```
+
+## Notes
+
+- If you add new Mongoose fields during development, restarting the dev server is sometimes necessary because Next.js hot reload can keep older compiled models in memory.
+- Admin user removal also cleans up related items and user messages.
+- Only the sender can delete their own chat messages.
+
+## License
+
+Use this project however you like, or add your preferred license here.

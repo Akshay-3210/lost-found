@@ -4,11 +4,7 @@ import { auth } from '@/lib/auth';
 import { dbConnect } from '@/helpers/dbConnect';
 import UserMessage from '@/model/UserMessage';
 
-interface RouteContext {
-  params: Promise<{ messageId: string }>;
-}
-
-export async function DELETE(_request: Request, { params }: RouteContext) {
+export async function DELETE(_request, { params }) {
   try {
     const session = await auth();
 

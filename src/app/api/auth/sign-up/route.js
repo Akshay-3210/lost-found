@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { dbConnect } from '@/helpers/dbConnect';
 import User from '@/model/User';
 import bcrypt from 'bcryptjs';
@@ -8,7 +8,7 @@ import { signUpSchema } from '@/schemas/auth';
 import { buildVerificationUrl, createEmailVerificationToken } from '@/lib/emailVerification';
 import { sendVerificationEmail } from '@/lib/mailer';
 
-export async function POST(request: NextRequest) {
+export async function POST(request) {
   try {
     const body = await request.json();
     const parsedBody = signUpSchema.parse(body);

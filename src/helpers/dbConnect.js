@@ -7,23 +7,13 @@ if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable');
 }
 
-interface MongooseCache {
-  conn: typeof mongoose | null;
-  promise: Promise<typeof mongoose> | null;
-  compatibilityPromise: Promise<void> | null;
-}
-
-declare global {
-  var mongoose: MongooseCache | undefined;
-}
-
-const cached: MongooseCache = global.mongoose || { conn: null, promise: null, compatibilityPromise: null };
+const cached = global.mongoose || { conn: null, promise: null, compatibilityPromise: null };
 
 if (!global.mongoose) {
   global.mongoose = cached;
 }
 
-export async function dbConnect(): Promise<typeof mongoose> {
+export async function dbConnect() {
   if (cached.conn) {
     await ensureDatabaseCompatibility(cached.conn);
     return cached.conn;
@@ -45,7 +35,7 @@ export async function dbConnect(): Promise<typeof mongoose> {
   return cached.conn;
 }
 
-async function ensureDatabaseCompatibility(connection: typeof mongoose) {
+async function ensureDatabaseCompatibility(connection) {
   if (!cached.compatibilityPromise) {
     cached.compatibilityPromise = (async () => {
       const usersCollection = connection.connection.db?.collection('users');

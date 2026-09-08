@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { dbConnect } from '@/helpers/dbConnect';
 import Item from '@/model/Item';
 import { auth } from '@/lib/auth';
 
 // POST claim an item
-export async function POST(request: NextRequest) {
+export async function POST(request) {
   try {
     const session = await auth();
 

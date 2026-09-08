@@ -40,7 +40,7 @@ function SearchContent({
         </div>
 
         <ToastProvider>
-          <ItemList type={type} status="active" />
+          <ItemList search={query} type={type} status="active" />
         </ToastProvider>
       </div>
     </div>

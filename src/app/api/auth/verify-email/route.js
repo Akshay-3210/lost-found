@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { dbConnect } from '@/helpers/dbConnect';
 import User from '@/model/User';
 import { hashEmailVerificationToken } from '@/lib/emailVerification';
 
-export async function POST(request: NextRequest) {
+export async function POST(request) {
   try {
     const body = await request.json();
     const token = typeof body.token === 'string' ? body.token.trim() : '';

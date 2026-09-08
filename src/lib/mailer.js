@@ -21,10 +21,6 @@ export async function sendVerificationEmail({
   email,
   name,
   verificationUrl,
-}: {
-  email: string;
-  name?: string;
-  verificationUrl: string;
 }) {
   const transporter = nodemailer.createTransport(getTransportConfig());
   const from = process.env.EMAIL_FROM || process.env.GMAIL_SMTP_EMAIL || 'no-reply@example.com';

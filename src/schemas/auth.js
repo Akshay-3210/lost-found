@@ -18,7 +18,3 @@ export const profileUpdateSchema = z.object({
   bio: z.string().max(280, 'Bio must be 280 characters or less').optional().or(z.literal('')),
   image: z.string().url('Profile image must be a valid URL').optional().or(z.literal('')),
 });
-
-export type SignInInput = z.infer<typeof signInSchema>;
-export type SignUpInput = z.infer<typeof signUpSchema>;
-export type ProfileUpdateInput = z.infer<typeof profileUpdateSchema>;

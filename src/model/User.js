@@ -1,21 +1,6 @@
-import mongoose, { Schema, Document, Model } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-export interface IUser extends Document {
-  email: string;
-  name?: string;
-  password?: string;
-  image?: string;
-  phone?: string;
-  location?: string;
-  bio?: string;
-  emailVerified?: Date;
-  emailVerificationToken?: string;
-  emailVerificationExpires?: Date;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const userSchema = new Schema<IUser>(
+const userSchema = new Schema(
   {
     email: {
       type: String,
@@ -71,7 +56,7 @@ const userSchema = new Schema<IUser>(
   }
 );
 
-const existingUserModel = mongoose.models.User as Model<IUser> | undefined;
+const existingUserModel = mongoose.models.User;
 const hasCurrentProfileFields =
   existingUserModel?.schema.path('phone') &&
   existingUserModel?.schema.path('location') &&
@@ -86,6 +71,6 @@ if (existingUserModel && !hasCurrentProfileFields) {
   delete mongoose.models.User;
 }
 
-const User: Model<IUser> = (mongoose.models.User as Model<IUser>) || mongoose.model<IUser>('User', userSchema);
+const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export default User;

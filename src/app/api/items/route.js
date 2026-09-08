@@ -1,11 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { dbConnect } from '@/helpers/dbConnect';
 import Item from '@/model/Item';
 import { auth } from '@/lib/auth';
 import { createItemSchema } from '@/schemas/item';
 
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 // GET all items (public)
-export async function GET(request: NextRequest) {
+export async function GET(request) {
   try {
     await dbConnect();
 
@@ -13,8 +17,9 @@ export async function GET(request: NextRequest) {
     const type = searchParams.get('type');
     const status = searchParams.get('status');
     const userId = searchParams.get('userId');
+    const search = searchParams.get('q')?.trim();
 
-    const query: Record<string, unknown> = {};
+    const query = {};
 
     if (type) {
       query.type = type;
@@ -24,6 +29,14 @@ export async function GET(request: NextRequest) {
     }
     if (userId) {
       query.userId = userId;
+    }
+    if (search) {
+      const prefixPattern = new RegExp(`^${escapeRegex(search)}`, 'i');
+      query.$or = [
+        { title: prefixPattern },
+        { description: prefixPattern },
+        { location: prefixPattern },
+      ];
     }
 
     const items = await Item.find(query)
@@ -41,7 +54,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST new item (requires auth)
-export async function POST(request: NextRequest) {
+export async function POST(request) {
   try {
     const session = await auth();
 

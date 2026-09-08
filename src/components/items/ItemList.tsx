@@ -5,13 +5,14 @@ import { Item } from '@/types';
 import ItemCard from './ItemCard';
 
 interface ItemListProps {
+  search?: string;
   type?: 'lost' | 'found';
   status?: 'active' | 'resolved' | 'claimed';
   userId?: string;
   showDelete?: boolean;
 }
 
-export default function ItemList({ type, status, userId, showDelete = false }: ItemListProps) {
+export default function ItemList({ search, type, status, userId, showDelete = false }: ItemListProps) {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,6 +24,7 @@ export default function ItemList({ type, status, userId, showDelete = false }: I
     const fetchItems = async () => {
       try {
         const params = new URLSearchParams();
+        if (search) params.append('q', search);
         if (type) params.append('type', type);
         if (status) params.append('status', status);
         if (userId) params.append('userId', userId);
@@ -38,7 +40,7 @@ export default function ItemList({ type, status, userId, showDelete = false }: I
     };
 
     fetchItems();
-  }, [type, status, userId]);
+  }, [search, type, status, userId]);
 
   if (isLoading) {
     return (

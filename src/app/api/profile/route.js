@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { dbConnect } from '@/helpers/dbConnect';
 import User from '@/model/User';
 import { profileUpdateSchema } from '@/schemas/auth';
 import { z } from 'zod';
 
-function buildProfileUpdate(validatedData: z.infer<typeof profileUpdateSchema>) {
+function buildProfileUpdate(validatedData) {
   const name = validatedData.name.trim();
   const phone = validatedData.phone?.trim() || '';
   const location = validatedData.location?.trim() || '';
@@ -45,7 +45,7 @@ export async function GET() {
   }
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request) {
   try {
     const session = await auth();
 
@@ -86,7 +86,7 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-export async function PATCH(request: NextRequest) {
+export async function PATCH(request) {
   try {
     const session = await auth();
 

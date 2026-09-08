@@ -1,4 +1,4 @@
-import NextAuth, { NextAuthConfig } from 'next-auth';
+import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
@@ -9,7 +9,7 @@ import { signInSchema } from '@/schemas/auth';
 const ADMIN_EMAIL = 'root@gmail.com';
 const ADMIN_PASSWORD = '12345678';
 
-export const authConfig: NextAuthConfig = {
+export const authConfig = {
   trustHost: true,
   providers: [
     Google({
@@ -163,8 +163,8 @@ export const authConfig: NextAuthConfig = {
     },
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as 'user' | 'admin';
+        session.user.id = token.id;
+        session.user.role = token.role;
 
         if (token.role === 'user' && token.id) {
           try {

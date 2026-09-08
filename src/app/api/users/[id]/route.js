@@ -3,11 +3,7 @@ import { NextResponse } from 'next/server';
 import { dbConnect } from '@/helpers/dbConnect';
 import User from '@/model/User';
 
-interface RouteContext {
-  params: Promise<{ id: string }>;
-}
-
-export async function GET(_request: Request, { params }: RouteContext) {
+export async function GET(_request, { params }) {
   try {
     const { id } = await params;
 

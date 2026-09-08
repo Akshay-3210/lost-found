@@ -1,22 +1,6 @@
-import mongoose, { Schema, Document, Model } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-export interface IItem extends Document {
-  title: string;
-  description: string;
-  type: 'lost' | 'found';
-  status: 'active' | 'resolved' | 'claimed';
-  location?: string;
-  date?: Date;
-  images?: string[];
-  contactInfo?: string;
-  userId: mongoose.Types.ObjectId;
-  claimedBy?: mongoose.Types.ObjectId;
-  claimedByName?: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const itemSchema = new Schema<IItem>(
+const itemSchema = new Schema(
   {
     title: {
       type: String,
@@ -76,7 +60,7 @@ const itemSchema = new Schema<IItem>(
 itemSchema.index({ type: 1, status: 1, createdAt: -1 });
 itemSchema.index({ userId: 1 });
 
-const existingItemModel = mongoose.models.Item as Model<IItem> | undefined;
+const existingItemModel = mongoose.models.Item;
 const hasCurrentClaimedByNameField = existingItemModel?.schema.path('claimedByName');
 
 // In local dev, hot reload can keep an older compiled Item model around.
@@ -85,6 +69,6 @@ if (existingItemModel && !hasCurrentClaimedByNameField) {
   delete mongoose.models.Item;
 }
 
-const Item: Model<IItem> = (mongoose.models.Item as Model<IItem>) || mongoose.model<IItem>('Item', itemSchema);
+const Item = mongoose.models.Item || mongoose.model('Item', itemSchema);
 
 export default Item;

@@ -6,11 +6,7 @@ import Item from '@/model/Item';
 import User from '@/model/User';
 import UserMessage from '@/model/UserMessage';
 
-interface RouteContext {
-  params: Promise<{ id: string }>;
-}
-
-export async function DELETE(_request: Request, { params }: RouteContext) {
+export async function DELETE(_request, { params }) {
   try {
     const session = await auth();
 

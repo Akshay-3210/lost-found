@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { dbConnect } from '@/helpers/dbConnect';
 import Item from '@/model/Item';
@@ -9,11 +9,7 @@ const adminItemActionSchema = z.object({
   claimedByName: z.string().max(120, 'Claimed by must be 120 characters or less').optional(),
 });
 
-interface RouteParams {
-  params: Promise<{ id: string }>;
-}
-
-export async function PATCH(request: NextRequest, { params }: RouteParams) {
+export async function PATCH(request, { params }) {
   try {
     const session = await auth();
 
@@ -70,7 +66,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
   }
 }
 
-export async function DELETE(_request: NextRequest, { params }: RouteParams) {
+export async function DELETE(_request, { params }) {
   try {
     const session = await auth();
 

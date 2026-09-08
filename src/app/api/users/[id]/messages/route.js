@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { dbConnect } from '@/helpers/dbConnect';
 import User from '@/model/User';
@@ -7,11 +7,7 @@ import UserMessage from '@/model/UserMessage';
 import { userMessageSchema } from '@/schemas/user';
 import { ZodError } from 'zod';
 
-interface RouteContext {
-  params: Promise<{ id: string }>;
-}
-
-export async function GET(_request: NextRequest, { params }: RouteContext) {
+export async function GET(_request, { params }) {
   try {
     const session = await auth();
 
@@ -54,7 +50,7 @@ export async function GET(_request: NextRequest, { params }: RouteContext) {
   }
 }
 
-export async function POST(request: NextRequest, { params }: RouteContext) {
+export async function POST(request, { params }) {
   try {
     const session = await auth();
 

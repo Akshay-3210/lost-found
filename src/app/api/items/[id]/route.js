@@ -1,15 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { dbConnect } from '@/helpers/dbConnect';
 import Item from '@/model/Item';
 import { auth } from '@/lib/auth';
 import { updateItemSchema } from '@/schemas/item';
 
-interface RouteParams {
-  params: Promise<{ id: string }>;
-}
-
 // GET single item
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(request, { params }) {
   try {
     const { id } = await params;
     await dbConnect();
@@ -34,7 +30,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 }
 
 // PUT update item
-export async function PUT(request: NextRequest, { params }: RouteParams) {
+export async function PUT(request, { params }) {
   try {
     const session = await auth();
 
@@ -101,7 +97,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 }
 
 // DELETE item
-export async function DELETE(request: NextRequest, { params }: RouteParams) {
+export async function DELETE(request, { params }) {
   try {
     const session = await auth();
 

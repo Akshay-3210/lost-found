@@ -1,16 +1,6 @@
-import mongoose, { Document, Model, Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-export interface IUserMessage extends Document {
-  senderId: mongoose.Types.ObjectId;
-  recipientId: mongoose.Types.ObjectId;
-  senderName?: string;
-  senderEmail: string;
-  message: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const userMessageSchema = new Schema<IUserMessage>(
+const userMessageSchema = new Schema(
   {
     senderId: {
       type: Schema.Types.ObjectId,
@@ -49,8 +39,8 @@ const userMessageSchema = new Schema<IUserMessage>(
 
 userMessageSchema.index({ recipientId: 1, createdAt: -1 });
 
-const UserMessage: Model<IUserMessage> =
-  (mongoose.models.UserMessage as Model<IUserMessage>) ||
-  mongoose.model<IUserMessage>('UserMessage', userMessageSchema);
+const UserMessage =
+  mongoose.models.UserMessage ||
+  mongoose.model('UserMessage', userMessageSchema);
 
 export default UserMessage;

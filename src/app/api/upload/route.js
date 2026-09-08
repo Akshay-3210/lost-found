@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { cloudinary, isConfigured } from '@/lib/cloudinary';
 
-export async function POST(request: NextRequest) {
+export async function POST(request) {
   try {
     if (!isConfigured) {
       console.error('Cloudinary not configured. Please add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET to your .env file.');

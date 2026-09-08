@@ -14,15 +14,15 @@ export function createEmailVerificationToken() {
   };
 }
 
-export function hashEmailVerificationToken(token: string) {
+export function hashEmailVerificationToken(token) {
   return crypto.createHash('sha256').update(token).digest('hex');
 }
 
-function normalizeBaseUrl(url: string) {
+function normalizeBaseUrl(url) {
   return url.trim().replace(/\/+$/, '');
 }
 
-export function getAppBaseUrl(preferredBaseUrl?: string) {
+export function getAppBaseUrl(preferredBaseUrl) {
   if (preferredBaseUrl) {
     return normalizeBaseUrl(preferredBaseUrl);
   }
@@ -42,7 +42,7 @@ export function getAppBaseUrl(preferredBaseUrl?: string) {
   return 'http://localhost:3000';
 }
 
-export function buildVerificationUrl(token: string, email: string, redirectTo?: string, baseUrl?: string) {
+export function buildVerificationUrl(token, email, redirectTo, baseUrl) {
   const url = new URL('/verify-email', getAppBaseUrl(baseUrl));
   url.searchParams.set('token', token);
   url.searchParams.set('email', email);
